@@ -14,7 +14,8 @@ map("n", "<A-w>", "<cmd>tabclose<CR>", opts "Close tab")
 -- map("t", "<Esc>", [[<C-\><C-n>]], opts "Exit terminal view")
 
 -- Save
-map({ "n", "i" }, "<C-s>", "<cmd>w<CR>", opts "Save buffer")
+vim.keymap.del("n", "<C-s>")
+map({ "n", "i" }, "<leader>s", "<cmd>w<CR>", opts "Save buffer")
 map(
   "n",
   "<leader>w",

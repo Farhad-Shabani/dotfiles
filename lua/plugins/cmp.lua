@@ -2,9 +2,7 @@ return {
   {
     "saghen/blink.cmp",
     dependencies = "rafamadriz/friendly-snippets",
-
-    version = "v0.*",
-
+    version = "*",
     opts = {
       completion = {
         list = { selection = { preselect = true, auto_insert = true } },
@@ -26,14 +24,13 @@ return {
         documentation = { auto_show = true, auto_show_delay_ms = 500 },
       },
 
-      keymap = { preset = "default", ["<CR>"] = { "accept", "fallback" } },
+      keymap = { preset = "super-tab", ["<CR>"] = { "accept", "fallback" } },
 
       cmdline = {
-        keymap = {
-          -- recommended, as the default keymap will only show and select the next item
-          ["<Tab>"] = { "show", "accept" },
+        completion = {
+          list = { selection = { preselect = false } },
+          menu = { auto_show = true },
         },
-        completion = { menu = { auto_show = true } },
       },
 
       appearance = {
@@ -41,8 +38,6 @@ return {
       },
 
       fuzzy = { implementation = "prefer_rust_with_warning" },
-
-      signature = { enabled = true },
     },
   },
 

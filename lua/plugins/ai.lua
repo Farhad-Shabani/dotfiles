@@ -11,13 +11,7 @@ return {
   {
     "yetone/avante.nvim",
     version = "*",
-    cmd = {
-      "AvanteAsk",
-      "AvanteEdit",
-      "AvanteChat",
-      "AvanteRefresh",
-      "AvanteToggle",
-    },
+    event = "VeryLazy",
     opts = {
       provider = "copilotclaude",
       hints = { enabled = false },

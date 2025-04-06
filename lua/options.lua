@@ -15,6 +15,7 @@ o.termguicolors = true
 o.expandtab = true
 o.autoindent = true
 o.signcolumn = "yes"
+o.conceallevel = 1
 
 local autocmd = vim.api.nvim_create_autocmd
 

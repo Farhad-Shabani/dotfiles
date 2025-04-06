@@ -11,9 +11,8 @@ return {
 
   {
     "MeanderingProgrammer/render-markdown.nvim",
-    ft = { "markdown" },
+    cmd = { "RenderMarkdown" },
     dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
-    opts = {},
     config = function()
       require("render-markdown").setup {}
       require("blink.cmp").setup {
