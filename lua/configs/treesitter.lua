@@ -2,6 +2,7 @@ return {
   "nvim-treesitter/nvim-treesitter",
   opts = {
     ensure_installed = {
+      "bash",
       "dockerfile",
       "json",
       "yaml",
@@ -18,6 +19,9 @@ return {
       "rust",
       "cairo",
       "svelte",
+      "go",
+      "gomod",
+      "gosum",
     },
   },
 }

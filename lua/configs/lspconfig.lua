@@ -17,6 +17,19 @@ local servers = {
   sqlls = {},
   svelte = {},
   pyright = {},
+  gopls = {
+    ft = { "go", "gomod", "gowork", "gotmpl" },
+    root_dir = lspconfig.util.root_pattern("go.work", "go.mod", ".git"),
+    settings = {
+      gopls = {
+        completeUnimported = true,
+        usePlaceholders = true,
+        analyses = {
+          unusedparams = true,
+        },
+      },
+    },
+  },
   denols = {
     root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
   },
@@ -24,6 +37,9 @@ local servers = {
     ft = "cairo",
     enable = true,
     cmd = { "scarb", "cairo-language-server", "/C", "--node-ipc" },
+  },
+  yamlls = {
+    ft = { "yaml", "yml" },
   },
 }
 
