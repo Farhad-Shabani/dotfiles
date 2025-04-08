@@ -28,7 +28,7 @@ local custom_file = function()
 
   -- Preserve background color of St_file
   local bg_color = vim.fn.synIDattr(vim.fn.hlID "St_file", "bg")
-  vim.cmd("hi St_FilePath guifg=#808080 guibg=" .. bg_color)
+  vim.cmd("hi St_FilePath guifg=#6b6b6b guibg=" .. bg_color)
 
   return "%#St_file# " .. icon .. "%#St_FilePath#" .. name .. "%#St_file_sep#" .. sep_r
 end
@@ -52,7 +52,7 @@ M.base46 = {
     "treesitter",
     "trouble",
   },
-  theme = "darcula-dark",
+  theme = "darcula",
 }
 
 M.ui = {

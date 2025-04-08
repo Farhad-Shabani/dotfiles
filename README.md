@@ -60,5 +60,6 @@ The NvChad statusline now shows the full path of the current file relative to th
 
 ### Themes
 
-- vscode: A dark, VSCode-inspired theme that fuses familiar aesthetics with vibrant accents and tailored syntax highlights.
-- everforest_dm: A medium dark Everforest variant.
+- **darcula**: A customized `darcula-dark` theme for Rust.
+- **everforest_dm**: A medium dark Everforest variant.
+- **vscode**: A dark, VSCode-inspired theme that fuses familiar aesthetics with vibrant accents and tailored syntax highlights.
