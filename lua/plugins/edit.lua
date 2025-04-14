@@ -26,6 +26,7 @@ return {
 
   {
     "chrisgrieser/nvim-rip-substitute",
+    commit = "1b5d78f3d69fcdf8e734114c665994ffe1672fde", -- remove once updated to Neovim 0.11
     keys = {
       {
         "<leader>fr",

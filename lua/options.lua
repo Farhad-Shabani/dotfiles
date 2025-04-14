@@ -16,6 +16,9 @@ o.expandtab = true
 o.autoindent = true
 o.signcolumn = "yes"
 o.conceallevel = 1
+o.timeout = true
+o.timeoutlen = 200
+o.ttimeoutlen = 10
 
 local autocmd = vim.api.nvim_create_autocmd
 

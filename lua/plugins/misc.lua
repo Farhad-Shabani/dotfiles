@@ -81,7 +81,11 @@ return {
     cmd = { "TodoQuickFix", "TodoLocList", "TodoTelescope" },
     config = function()
       dofile(vim.g.base46_cache .. "todo")
-      require("todo-comments").setup()
+      require("todo-comments").setup {
+        highlight = {
+          pattern = [[.*<(KEYWORDS)\s*]],
+        },
+      }
     end,
   },
 

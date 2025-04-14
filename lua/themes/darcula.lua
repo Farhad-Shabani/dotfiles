@@ -74,6 +74,7 @@ M.polish_hl = {
     ["@lsp.type.decorator"] = { fg = M.base_30.sun },
     ["@lsp.type.namespace"] = { fg = M.base_30.cyan },
     ["@lsp.type.macro"] = { fg = M.base_30.purple },
+    ["@lsp.function.macro"] = { fg = M.base_30.purple },
     ["@lsp.type.enumMember"] = { fg = M.base_30.teal },
     ["@module"] = { fg = M.base_30.cyan },
     ["@punctuation.bracket"] = { fg = M.base_30.white },

@@ -7,7 +7,7 @@ local function opts(desc, expr)
 end
 
 -- Exit
-map("i", "jk", "<ESC>")
+map({ "i", "v" }, "jk", "<ESC>")
 map("n", "<leader>jk", "<cmd>nohl<CR>", opts "Clear search highlight")
 map("n", "<leader>q", "<cmd>q<CR>", opts "Close buffer")
 map("n", "<A-w>", "<cmd>tabclose<CR>", opts "Close tab")
@@ -15,7 +15,7 @@ map("n", "<A-w>", "<cmd>tabclose<CR>", opts "Close tab")
 
 -- Save
 vim.keymap.del("n", "<C-s>")
-map({ "n", "i" }, "<leader>s", "<cmd>w<CR>", opts "Save buffer")
+map({ "n" }, "<leader>s", "<cmd>w<CR>", opts "Save buffer")
 map(
   "n",
   "<leader>w",
