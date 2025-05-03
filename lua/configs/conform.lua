@@ -7,7 +7,7 @@ conform.setup {
     python = { "isort", "black" },
     -- rust = { "rustfmt", lsp_format = "fallback" },
     markdown = { "markdownlint", stop_after_first = true },
-    json = { "prettierd", "prettier", stop_after_first = true },
+    json = { "jq", stop_after_first = true },
     javascript = { "prettierd", "prettier", stop_after_first = true },
     javascriptreact = { "prettierd", "prettier", stop_after_first = true },
     typescript = { "prettierd", "prettier", stop_after_first = true },

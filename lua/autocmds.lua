@@ -28,28 +28,6 @@ autocmd("BufDelete", {
   end,
 })
 
-autocmd("BufReadPost", {
-  pattern = "*",
-  callback = function()
-    local line = vim.fn.line "'\""
-    if
-      line > 1
-      and line <= vim.fn.line "$"
-      and vim.bo.filetype ~= "commit"
-      and vim.fn.index({ "xxd", "gitrebase" }, vim.bo.filetype) == -1
-    then
-      vim.cmd 'normal! g`"'
-    end
-  end,
-})
-
-autocmd("User", {
-  pattern = "*",
-  callback = function()
-    require("configs.git").diff_hl()
-  end,
-})
-
 -- Set configs for markdown files
 autogroup("MarkdownSettings", { clear = true })
 autocmd("FileType", {

@@ -9,8 +9,6 @@ g.base46_cache = vim.fn.stdpath "data" .. "/nvchad/base46/"
 dofile(g.base46_cache .. "defaults")
 dofile(g.base46_cache .. "syntax")
 dofile(g.base46_cache .. "statusline")
-dofile(g.base46_cache .. "bufferline")
-dofile(g.base46_cache .. "dap")
 dofile(g.base46_cache .. "devicons")
 dofile(g.base46_cache .. "nvimtree")
 dofile(g.base46_cache .. "telescope")

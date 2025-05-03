@@ -27,6 +27,7 @@ map(
 map({ "v", "x" }, "<leader>p", '"_dP', opts "Delete w/o storing in register and paste")
 map({ "n", "v" }, "<leader>y", '"ay', opts "Yank to 'a' register")
 map({ "v", "x" }, "<leader>pa", '"_d"aP', opts "Delete and paste from 'a' register")
+map({ "v", "x" }, "<D-c>", '"+y', opts "Yank to clippboard")
 
 -- Modify without altering registers
 map({ "n", "v" }, "x", '"_x', opts "Delete single char, w/o storing in register")
@@ -73,8 +74,8 @@ map(
   opts "Telescope file browser (on current buffer)"
 )
 map("n", "<Leader>fR", ":%s/<C-r><C-w>//g<Left><Left>", opts "Find and replace focused word")
-map("n", "<leader>fc", "<cmd>Telescope grep_string<CR>", opts "Telescope find word under cursor")
-map("n", "<leader>fC", "<cmd>Telescope commands<CR>", opts "Telescope find commands")
+map("n", "<leader>fs", "<cmd>Telescope grep_string<CR>", opts "Telescope find word under cursor")
+map("n", "<leader>fc", "<cmd>Telescope commands<CR>", opts "Telescope find commands")
 map("n", "<leader>fo", "<cmd>Telescope oldfiles<CR>", opts "Telescope find history")
 map("n", "<leader>fW", function()
   require("telescope.builtin").live_grep {
@@ -85,13 +86,13 @@ map("n", "<leader>fW", function()
 end, opts "Telescope find word in all files")
 map(
   "n",
-  "<leader>fg",
+  "<leader>fl",
   "<cmd>:lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>",
   opts "Telescope live grep args"
 )
 map("n", "<leader>fm", "<cmd>Telescope marks<CR>", opts "Telescope marks")
 map("n", "<leader>fj", "<cmd>Telescope jumplist<CR>", opts "Telescope jumplist")
-map("n", "[C", function()
+map("n", "[x", function()
   require("treesitter-context").go_to_context(vim.v.count1)
 end, opts "Go to context")
 
@@ -157,8 +158,8 @@ map("n", "<leader>ld", "<cmd>Telescope lsp_definitions<CR>", opts "Telescope def
 map("n", "<leader>lt", "<cmd>Telescope lsp_type_definitions<CR>", opts "Telescope type definitions")
 map("n", "<leader>lI", "<cmd>Telescope lsp_incoming_calls<CR>", opts "Telescope incoming calls")
 map("n", "<leader>lO", "<cmd>Telescope lsp_outgoing_calls<CR>", opts "Telescope outgoing calls")
-map("n", "<leader>ls", "<cmd>Telescope lsp_workspace_symbols<CR>", opts "Telescope workspace symbols")
-map("n", "<leader>lS", "<cmd>Telescope lsp_dynamic_workspace_symbols<CR>", opts "Telescope dynamic workspace symbols")
+map("n", "<leader>lS", "<cmd>Telescope lsp_workspace_symbols<CR>", opts "Telescope workspace symbols")
+map("n", "<leader>ls", "<cmd>Telescope lsp_dynamic_workspace_symbols<CR>", opts "Telescope dynamic workspace symbols")
 map("n", "<leader>lD", vim.lsp.buf.declaration, opts "Declaration of current symbol")
 map("n", "<leader>la", vim.lsp.buf.code_action, opts "Code action")
 map("n", "<leader>rn", vim.lsp.buf.rename, opts "Rename symbol")
@@ -188,12 +189,15 @@ map("n", "<Leader>Ls", "<cmd>Lazy sync<CR>", opts "Lazy sync")
 map("n", "<Leader>Lu", "<cmd>Lazy update<CR>", opts "Lazy update")
 
 -- Git
-map("n", "<leader>gf", "<cmd>Telescope git_files<CR>", opts "Telescope find git files")
-map("n", "<leader>gB", "<cmd>Telescope git_branches<CR>", opts "Telescope git branches")
-map("n", "<leader>gc", "<cmd>Telescope git_commits<CR>", opts "Telescope git commits (repository)")
-map("n", "<leader>gC", "<cmd>Telescope git_bcommits<CR>", opts "Telescope git commits (current file)")
+map("n", "<leader>tf", "<cmd>Telescope git_files<CR>", opts "Telescope find git files")
+map("n", "<leader>tB", "<cmd>Telescope git_branches<CR>", opts "Telescope git branches")
+map("n", "<leader>tc", "<cmd>Telescope git_commits<CR>", opts "Telescope git commits (repository)")
+map("n", "<leader>tC", "<cmd>Telescope git_bcommits<CR>", opts "Telescope git commits (current file)")
 map("n", "<Leader>gn", "<cmd>Neogit<CR>", opts "Neogit open")
-map("n", "<Leader>gg", "<cmd>GBrowse<CR>", opts "Open current file in web")
+map("v", "<Leader>go", "<cmd>'<,'>GBrowse<CR>", opts "Open current selection in web")
+map("n", "<Leader>go", "<cmd>GBrowse<CR>", opts "Open current selection in web")
+map("v", "<Leader>gy", "<cmd>'<,'>GBrowse!<CR>", opts "Copy permalink of current selection")
+map("n", "<Leader>gy", "<cmd>GBrowse!<CR>", opts "Copy permalink of current selection")
 map("n", "<Leader>oi", "<cmd>Octo issue list<CR>", opts "Octo issue list")
 map("n", "<Leader>op", "<cmd>Octo pr list<CR>", opts "Octo PR list")
 map("n", "<Leader>or", "<cmd>Octo review<CR>", opts "Octo review")
@@ -213,8 +217,8 @@ map("n", "[c", function()
     gitsigns.nav_hunk "prev"
   end
 end, opts "Gitsigns prev git hunk")
-map("n", "<leader>gs", gitsigns.stage_hunk, opts "Gitsings stage hunk")
-map("n", "<leader>gr", gitsigns.reset_hunk, opts "Gitsigns Reset hunk")
+map({ "n", "v" }, "<leader>gs", gitsigns.stage_hunk, opts "Gitsings stage hunk")
+map({ "n", "v" }, "<leader>gr", gitsigns.reset_hunk, opts "Gitsigns Reset hunk")
 map("n", "<leader>gS", gitsigns.stage_buffer, opts "Gitsigns stage buffer")
 map("n", "<leader>gR", gitsigns.reset_buffer, opts "Gitsigns reset buffer")
 map("n", "<leader>gp", gitsigns.preview_hunk, opts "Gitsigns preview hunk")
@@ -226,19 +230,19 @@ end, opts "Gitsings blame line")
 map("n", "<leader>tb", gitsigns.toggle_current_line_blame, opts "Gitsigns toggle current line blame")
 map("n", "<leader>td", gitsigns.toggle_deleted, opts "Gitsigns toggle deleted lines")
 map("n", "<leader>tw", gitsigns.toggle_word_diff, opts "Gitsigns toggle word diff in hunks")
-map("n", "<Leader>ga", "<cmd>DiffviewOpen<CR>", opts "Diff view all current changes")
+map("n", "<Leader>gd", "<cmd>DiffviewOpen<CR>", opts "Diff view all current changes")
 map(
   "n",
-  "<Leader>gA",
+  "<Leader>gm",
   "<cmd>DiffviewOpen origin/main...HEAD --imply-local<CR>",
   opts "Diff view against base (for PRs)"
 )
-map("n", "<Leader>gh", "<cmd>DiffviewFileHistory %<CR>", opts "Diff view current file history")
-map("n", "<Leader>gH", "<cmd>DiffviewFileHistory --range=origin/main...HEAD<CR>", opts "Diff view current file history")
-map("n", "<leader>gd", gitsigns.diffthis, opts "Gitsigns diff against index")
-map("n", "<leader>gD", function()
+map("n", "<leader>gf", gitsigns.diffthis, opts "Gitsigns diff against index")
+map("n", "<leader>gc", function()
   gitsigns.diffthis "~"
 end, opts "Gitsigns diff against last commit")
+map("n", "<Leader>gh", "<cmd>DiffviewFileHistory %<CR>", opts "Diff view current file history")
+map("n", "<Leader>gH", "<cmd>DiffviewFileHistory --range=origin/main...HEAD<CR>", opts "Diff view current file history")
 map("n", "<leader>gQ", function()
   gitsigns.setqflist "all"
 end, opts "Gitsings add all hunks to quickfix")
