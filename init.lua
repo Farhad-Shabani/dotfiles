@@ -37,6 +37,7 @@ require("lazy").setup({
   },
   { import = "plugins" },
 }, lazy_config)
+require("note").setup()
 
 require "nvchad.options"
 require "options"
