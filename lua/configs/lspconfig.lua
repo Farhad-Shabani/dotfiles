@@ -41,6 +41,9 @@ local servers = {
   yamlls = {
     ft = { "yaml", "yml" },
   },
+  zls = {
+    ft = { "zig", "zir" },
+  },
 }
 
 for name, opts in pairs(servers) do

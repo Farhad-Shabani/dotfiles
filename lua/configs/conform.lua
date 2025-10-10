@@ -5,8 +5,7 @@ conform.setup {
   formatters_by_ft = {
     lua = { "stylua" },
     python = { "isort", "black" },
-    -- rust = { "rustfmt", lsp_format = "fallback" },
-    markdown = { "markdownlint", stop_after_first = true },
+    markdown = { "prettier", stop_after_first = true },
     json = { "jq", stop_after_first = true },
     javascript = { "prettierd", "prettier", stop_after_first = true },
     javascriptreact = { "prettierd", "prettier", stop_after_first = true },

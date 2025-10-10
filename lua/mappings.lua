@@ -8,8 +8,10 @@ end
 
 -- Exit
 map({ "i", "v" }, "jk", "<ESC>")
+map("i", "<ESC>", "<ESC>", { noremap = true, silent = true })
 map("n", "<leader>jk", "<cmd>nohl<CR>", opts "Clear search highlight")
 map("n", "<leader>q", "<cmd>q<CR>", opts "Close buffer")
+map("n", "<leader>Q", "<cmd>q!<CR>", opts "Close buffer forcefully")
 map("n", "<A-w>", "<cmd>tabclose<CR>", opts "Close tab")
 -- map("t", "<Esc>", [[<C-\><C-n>]], opts "Exit terminal view")
 
@@ -66,6 +68,7 @@ map("n", "<leader>sx", "<cmd>close<CR>", opts "Close current split")
 map("n", "<leader>z", "<cmd>ZenMode<CR>", opts "Toggle ZenMode")
 
 -- Find
+map("n", "<Leader>ff", "<cmd>Telescope find_files<CR>", opts "Telescope find files")
 map("n", "<Leader>f", "<cmd>Telescope resume<CR>", opts "Telescope resume last search")
 map(
   "n",
@@ -87,6 +90,12 @@ end, opts "Telescope find word in all files")
 map(
   "n",
   "<leader>fl",
+  "<cmd>:lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>",
+  opts "Telescope live grep args"
+)
+map(
+  "n",
+  "<leader>k",
   "<cmd>:lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>",
   opts "Telescope live grep args"
 )
@@ -150,6 +159,7 @@ map("n", "<Leader>e", vim.diagnostic.open_float, opts "Show diagnostics float")
 map("n", "<leader>fq", "<cmd>Telescope quickfix<CR>", opts "Telescope quickfix")
 map("n", "<leader>ls", "<cmd>Telescope spell_suggest<CR>", opts "Telescope spell suggest")
 map("n", "<leader>le", "<cmd>Telescope diagnostics<CR>", opts "Telescope diagnostics")
+map("n", "<leader>tn", "<cmd>Telescope noice<CR>", opts "Telescope noice")
 
 -- LSP
 map("n", "<leader>lr", "<cmd>Telescope lsp_references<CR>", opts "Telescope references")
@@ -198,8 +208,9 @@ map("v", "<Leader>go", "<cmd>'<,'>GBrowse<CR>", opts "Open current selection in 
 map("n", "<Leader>go", "<cmd>GBrowse<CR>", opts "Open current selection in web")
 map("v", "<Leader>gy", "<cmd>'<,'>GBrowse!<CR>", opts "Copy permalink of current selection")
 map("n", "<Leader>gy", "<cmd>GBrowse!<CR>", opts "Copy permalink of current selection")
-map("n", "<Leader>oi", "<cmd>Octo issue list<CR>", opts "Octo issue list")
+map("n", "<Leader>o", "<cmd>Octo pr<CR>", opts "Octo PR")
 map("n", "<Leader>op", "<cmd>Octo pr list<CR>", opts "Octo PR list")
+map("n", "<Leader>oi", "<cmd>Octo issue list<CR>", opts "Octo issue list")
 map("n", "<Leader>or", "<cmd>Octo review<CR>", opts "Octo review")
 
 local gitsigns = require "gitsigns"
@@ -249,3 +260,4 @@ end, opts "Gitsings add all hunks to quickfix")
 map("n", "<leader>gq", gitsigns.setqflist, opts "Gitsigns add buffer hunks to quickfix")
 map({ "o", "x" }, "gv", "<cmd>Gitsigns select_hunk<CR>", opts "Gitsigns select hunk")
 map("n", "ga", require("configs/nvim-tree").git_add, opts "Git add")
+map("n", "gc", ':G commit -m "', opts "Git commit")

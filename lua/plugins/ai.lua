@@ -1,31 +1,28 @@
 return {
-  -- {
-  --   "zbirenbaum/copilot.lua",
-  --   cmd = "Copilot",
-  --   event = "InsertEnter",
-  --   config = function()
-  --     require("copilot").setup {}
-  --   end,
-  -- },
-
   {
-    "yetone/avante.nvim",
-    version = "*",
-    event = "VeryLazy",
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
     opts = {
-      provider = "copilotclaude",
-      hints = { enabled = false },
-      vendors = {
-        copilotclaude = {
-          __inherited_from = "copilot",
-          api_key_name = "GITHUB_TOKEN",
-          model = "claude-3.5-sonnet",
-          max_tokens = 4096,
+      suggestion = {
+        keymap = {
+          accept = "<C-l>",
+          next = "<C-]>",
+          prev = "<C-[>",
+          dismiss = "<C-h>",
         },
       },
     },
-    -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
-    build = "make",
+  },
+
+  {
+    "yetone/avante.nvim",
+    version = false,
+    event = "VeryLazy",
+    opts = {
+      provider = "copilot",
+      hints = { enabled = false },
+    },
     -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
     dependencies = {
       "stevearc/dressing.nvim",
@@ -35,6 +32,7 @@ return {
       "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
       "Kaiser-Yang/blink-cmp-avante", -- autocompletion for avante commands and mentions
       "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
+      "zbirenbaum/copilot.lua",
       {
         -- support for image pasting
         "HakonHarnes/img-clip.nvim",
@@ -52,14 +50,14 @@ return {
           },
         },
       },
-      {
-        -- Make sure to set this up properly if you have lazy=true
-        "MeanderingProgrammer/render-markdown.nvim",
-        opts = {
-          file_types = { "markdown", "Avante" },
-        },
-        ft = { "markdown", "Avante" },
-      },
+      -- {
+      --   -- Make sure to set this up properly if you have lazy=true
+      --   "MeanderingProgrammer/render-markdown.nvim",
+      --   opts = {
+      --     file_types = { "markdown", "Avante" },
+      --   },
+      --   ft = { "markdown", "Avante" },
+      -- },
     },
   },
 }
