@@ -17,7 +17,7 @@ conform.setup {
   },
 }
 
-autocmd("bufwritepre", {
+autocmd("BufWritePre", {
   pattern = "*",
   callback = function(args)
     conform.format { bufnr = args.buf }

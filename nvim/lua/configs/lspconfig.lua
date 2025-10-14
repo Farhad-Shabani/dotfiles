@@ -1,4 +1,5 @@
-local lspconfig = require "lspconfig"
+local util = require "lspconfig.util"
+local blink = require "blink.cmp"
 local nvlsp = require "nvchad.configs.lspconfig"
 
 nvlsp.defaults()
@@ -9,7 +10,7 @@ local servers = {
   html = {},
   cssls = {},
   ts_ls = {
-    root_dir = lspconfig.util.root_pattern "package.json",
+    root_dir = util.root_pattern "package.json",
     single_file_support = false,
   },
   tailwindcss = {},
@@ -19,7 +20,7 @@ local servers = {
   pyright = {},
   gopls = {
     ft = { "go", "gomod", "gowork", "gotmpl" },
-    root_dir = lspconfig.util.root_pattern("go.work", "go.mod", ".git"),
+    root_dir = util.root_pattern("go.work", "go.mod", ".git"),
     settings = {
       gopls = {
         completeUnimported = true,
@@ -31,7 +32,7 @@ local servers = {
     },
   },
   denols = {
-    root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
+    root_dir = util.root_pattern("deno.json", "deno.jsonc"),
   },
   cairo_ls = {
     ft = "cairo",
@@ -46,9 +47,13 @@ local servers = {
   },
 }
 
+vim.lsp.config("*", {
+  on_init = nvlsp.on_init,
+  on_attach = nvlsp.on_attach,
+  capabilities = blink.get_lsp_capabilities(nvlsp.capabilities),
+})
+
 for name, opts in pairs(servers) do
-  opts.on_init = nvlsp.on_init
-  opts.on_attach = nvlsp.on_attach
-  opts.capabilities = require("blink.cmp").get_lsp_capabilities(nvlsp.capabilities)
-  lspconfig[name].setup(opts)
+  vim.lsp.config(name, opts)
+  vim.lsp.enable(name)
 end

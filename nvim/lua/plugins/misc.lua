@@ -8,13 +8,26 @@ return {
   },
 
   {
+    "neovim/nvim-lspconfig",
+    config = function()
+      require "configs.lspconfig"
+    end,
+  },
+
+  {
+    "stevearc/conform.nvim",
+    event = 'BufWritePre',
+    opts = require "configs.conform",
+  },
+
+  {
     "iden3/vim-circom-syntax",
     ft = { "circom" },
   },
 
   {
     "folke/noice.nvim",
-    lazy = false,
+    event = "VeryLazy",
     opts = {
       lsp = {
         -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
@@ -73,20 +86,6 @@ return {
         })
       end,
     },
-  },
-
-  {
-    "folke/todo-comments.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    cmd = { "TodoQuickFix", "TodoLocList", "TodoTelescope" },
-    config = function()
-      dofile(vim.g.base46_cache .. "todo")
-      require("todo-comments").setup {
-        highlight = {
-          pattern = [[.*<(KEYWORDS)\s*]],
-        },
-      }
-    end,
   },
 
   {

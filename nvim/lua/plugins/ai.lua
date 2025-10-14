@@ -1,7 +1,7 @@
 return {
   {
     "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
+    lazy = false,
     event = "InsertEnter",
     opts = {
       suggestion = {
@@ -17,15 +17,15 @@ return {
 
   {
     "yetone/avante.nvim",
+    build = vim.fn.has "win32" ~= 0 and "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false"
+      or "make",
     version = false,
     event = "VeryLazy",
     opts = {
       provider = "copilot",
       hints = { enabled = false },
     },
-    -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
     dependencies = {
-      "stevearc/dressing.nvim",
       "nvim-lua/plenary.nvim",
       "MunifTanjim/nui.nvim",
       --- The below dependencies are optional,

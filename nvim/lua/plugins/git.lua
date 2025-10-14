@@ -5,7 +5,6 @@ return {
       "nvim-tree/nvim-web-devicons",
     },
     config = function()
-      dofile(vim.g.base46_cache .. "diffview")
       require("diffview").setup()
     end,
     cmd = {
@@ -75,7 +74,6 @@ return {
     version = "*",
     event = "VeryLazy",
     config = function()
-      dofile(vim.g.base46_cache .. "git-conflict")
       require("git-conflict").setup {
         default_mappings = true,
       }

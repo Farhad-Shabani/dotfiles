@@ -7,8 +7,8 @@ This repository extends [NvChad](https://github.com/NvChad/NvChad) with addition
 ## 📌 Prerequisites
 
 - **System Requirements:** `curl`, `grep`, `Node.js` ≥ 18, `npm`, and `yarn`
-- **Neovim** ≥ 0.10
-- **Github CLI** ≥  2.2.0
+- **Neovim** ≥ 0.11
+- **Github CLI** ≥ 2.2.0
 - **lazygit**: Check the [installation](https://github.com/jesseduffield/lazygit?tab=readme-ov-file#installation).
 - **Yazi**: Check the [installation](https://yazi-rs.github.io/docs/installation).
 

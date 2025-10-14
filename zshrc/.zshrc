@@ -83,13 +83,16 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
+alias tmux='tmux -f ~/.config/tmux/tmux.conf'
+alias dtf='cd ~/dotfiles/'
+
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions (Specifically configured for Lazygit)
-alias nvim="$HOME/nvim/bin/nvim"
+alias nvim="/opt/homebrew/bin/nvim"
 export VISUAL="nvim"
 export EDITOR="nvim"
 alias vim='nvim --listen /tmp/nvim-server.pipe'
@@ -143,5 +146,3 @@ function y() {
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"

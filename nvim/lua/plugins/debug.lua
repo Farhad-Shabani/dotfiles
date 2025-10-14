@@ -31,7 +31,6 @@ return {
     opts = {}, -- for default options, refer to the configuration section for custom setup.
     cmd = "Trouble",
     config = function()
-      dofile(vim.g.base46_cache .. "trouble")
       require("trouble").setup()
     end,
     keys = {
@@ -86,5 +85,18 @@ return {
         },
       },
     },
+  },
+
+  {
+    "folke/todo-comments.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    cmd = { "TodoQuickFix", "TodoLocList", "TodoTelescope" },
+    config = function()
+      require("todo-comments").setup {
+        highlight = {
+          pattern = [[.*<(KEYWORDS)\s*]],
+        },
+      }
+    end,
   },
 }
