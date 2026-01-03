@@ -17,8 +17,12 @@ function M.toggle()
     state = {}
     return
   end
-  vim.cmd("rightbelow vsplit " .. vim.fn.fnameescape(path()))
-  state.win, state.buf = vim.api.nvim_get_current_win(), vim.api.nvim_get_current_buf()
+  local p = path()
+  local buf = vim.fn.bufadd(p)
+  vim.fn.bufload(buf)
+  vim.cmd "rightbelow vsplit"
+  vim.api.nvim_win_set_buf(0, buf)
+  state.win, state.buf = vim.api.nvim_get_current_win(), buf
   vim.api.nvim_win_set_width(state.win, 42)
   vim.wo[state.win].winfixwidth = true
   vim.wo[state.win].number = false

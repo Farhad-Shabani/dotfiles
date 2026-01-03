@@ -16,8 +16,10 @@ return {
 
   {
     "stevearc/conform.nvim",
-    event = 'BufWritePre',
-    opts = require "configs.conform",
+    event = "BufWritePre",
+    config = function()
+      require "configs.conform"
+    end,
   },
 
   {
@@ -50,7 +52,20 @@ return {
     },
   },
 
-  { "LunarVim/bigfile.nvim" },
+  {
+    "LunarVim/bigfile.nvim",
+    opts = {
+      filesize = 1, -- 1 MiB threshold
+      features = {
+        "indent_blankline",
+        "lsp",
+        "treesitter",
+        "syntax",
+        "matchparen",
+        "vimopts",
+      },
+    },
+  },
 
   {
     "folke/zen-mode.nvim",

@@ -1,3 +1,25 @@
+-- Shared color palette (modern aesthetic)
+local C = {
+  -- Foreground (modern, balanced)
+  green = "#5dba63",
+  red = "#e86b64",
+  blue = "#6ba8e0",
+  orange = "#e0a060",
+
+  -- Diff (semantic: green=added, red=removed)
+  add_bg = "#1a2e1a",
+  del_bg = "#2e1a1a",
+  add_text_bg = "#264f26",
+  del_text_bg = "#4f2626",
+  change_bg = "#232323",
+  neutral = "#323232",
+
+  -- Conflict (semantic: blue=current/ours, green=incoming/theirs)
+  current_bg = "#1a1a2e",
+  incoming_bg = "#1a2e1a",
+  ancestor_bg = "#232323",
+}
+
 return {
   {
     "sindrets/diffview.nvim",
@@ -5,7 +27,72 @@ return {
       "nvim-tree/nvim-web-devicons",
     },
     config = function()
-      require("diffview").setup()
+      local hl = vim.api.nvim_set_hl
+
+      local function set_diff_hl()
+        -- Base diff highlights
+        hl(0, "DiffAdd", { bg = C.add_bg })
+        hl(0, "DiffDelete", { bg = C.del_bg }) -- Keep readable for gitsigns inline preview
+        hl(0, "DiffChange", { bg = C.change_bg })
+        hl(0, "DiffText", { bg = C.add_text_bg, fg = C.green, bold = true })
+
+        -- Left pane (old/deletions - red)
+        hl(0, "DiffAddLeft", { bg = C.del_bg })
+        hl(0, "DiffDeleteLeft", { fg = C.neutral, bg = C.neutral })
+        hl(0, "DiffChangeLeft", { bg = C.del_bg })
+        hl(0, "DiffTextLeft", { bg = C.del_text_bg, fg = C.red, bold = true })
+
+        -- Right pane (new/additions - green)
+        hl(0, "DiffAddRight", { bg = C.add_bg })
+        hl(0, "DiffDeleteRight", { fg = C.neutral, bg = C.neutral })
+        hl(0, "DiffChangeRight", { bg = C.add_bg })
+        hl(0, "DiffTextRight", { bg = C.add_text_bg, fg = C.green, bold = true })
+
+        -- Diffview specific
+        hl(0, "DiffviewDiffAddAsDelete", { bg = C.del_bg })
+        hl(0, "DiffviewDiffDeleteDim", { fg = C.neutral, bg = C.neutral })
+
+        -- File panel
+        hl(0, "DiffviewFilePanelTitle", { fg = C.orange, bold = true })
+        hl(0, "DiffviewFilePanelCounter", { fg = C.orange })
+        hl(0, "DiffviewFilePanelInsertions", { fg = C.green })
+        hl(0, "DiffviewFilePanelDeletions", { fg = C.red })
+
+        -- Status indicators
+        hl(0, "DiffviewStatusAdded", { fg = C.green })
+        hl(0, "DiffviewStatusModified", { fg = C.orange })
+        hl(0, "DiffviewStatusRenamed", { fg = C.orange })
+        hl(0, "DiffviewStatusDeleted", { fg = C.red })
+        hl(0, "DiffviewStatusUntracked", { fg = C.green })
+      end
+
+      vim.opt.fillchars:append { diff = " " }
+
+      require("diffview").setup {
+        enhanced_diff_hl = true,
+        hooks = {
+          view_opened = set_diff_hl,
+          diff_buf_win_enter = function(_, winid, ctx)
+            if ctx.layout_name:match "^diff2" then
+              if ctx.symbol == "a" then
+                vim.wo[winid].winhl = table.concat({
+                  "DiffAdd:DiffAddLeft",
+                  "DiffDelete:DiffDeleteLeft",
+                  "DiffChange:DiffChangeLeft",
+                  "DiffText:DiffTextLeft",
+                }, ",")
+              else
+                vim.wo[winid].winhl = table.concat({
+                  "DiffAdd:DiffAddRight",
+                  "DiffDelete:DiffDeleteRight",
+                  "DiffChange:DiffChangeRight",
+                  "DiffText:DiffTextRight",
+                }, ",")
+              end
+            end
+          end,
+        },
+      }
     end,
     cmd = {
       "DiffviewOpen",
@@ -74,8 +161,18 @@ return {
     version = "*",
     event = "VeryLazy",
     config = function()
+      local hl = vim.api.nvim_set_hl
+      hl(0, "ConflictCurrent", { bg = C.current_bg }) -- blue: what you have
+      hl(0, "ConflictIncoming", { bg = C.incoming_bg }) -- green: what's coming
+      hl(0, "ConflictAncestor", { bg = C.ancestor_bg }) -- gray: common ancestor
+
       require("git-conflict").setup {
         default_mappings = true,
+        highlights = {
+          current = "ConflictCurrent",
+          incoming = "ConflictIncoming",
+          ancestor = "ConflictAncestor",
+        },
       }
     end,
   },

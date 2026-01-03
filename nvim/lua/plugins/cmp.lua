@@ -5,15 +5,18 @@ return {
       "rafamadriz/friendly-snippets",
       "Kaiser-Yang/blink-cmp-avante",
     },
-    version = "*",
+    version = "1.*",
     opts = {
+      enabled = function()
+        return vim.bo.filetype ~= "markdown"
+      end,
+
       completion = {
         list = { selection = { preselect = true, auto_insert = true } },
 
         accept = { auto_brackets = { enabled = true } },
 
         menu = {
-          -- nvim-cmp style menu
           draw = {
             treesitter = { "lsp" },
             columns = {
@@ -23,7 +26,6 @@ return {
           },
         },
 
-        -- Show documentation when selecting a completion item
         documentation = { auto_show = true, auto_show_delay_ms = 500 },
       },
 
@@ -32,10 +34,6 @@ return {
           list = { selection = { preselect = false } },
           menu = { auto_show = true },
         },
-      },
-
-      appearance = {
-        use_nvim_cmp_as_default = true,
       },
 
       fuzzy = { implementation = "prefer_rust_with_warning" },

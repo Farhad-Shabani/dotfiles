@@ -1,9 +1,12 @@
 return {
   {
     "zbirenbaum/copilot.lua",
-    lazy = false,
     event = "InsertEnter",
     opts = {
+      filetypes = {
+        ["*"] = true,
+        markdown = false,
+      },
       suggestion = {
         keymap = {
           accept = "<C-l>",
@@ -22,8 +25,11 @@ return {
     version = false,
     event = "VeryLazy",
     opts = {
-      provider = "copilot",
+      provider = "claude-code",
       hints = { enabled = false },
+      selector = {
+        provider = "telescope",
+      },
     },
     dependencies = {
       "nvim-lua/plenary.nvim",

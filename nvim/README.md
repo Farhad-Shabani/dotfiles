@@ -10,16 +10,15 @@ This repository extends [NvChad](https://github.com/NvChad/NvChad) with addition
 - **Neovim** ≥ 0.11
 - **Github CLI** ≥ 2.2.0
 - **lazygit**: Check the [installation](https://github.com/jesseduffield/lazygit?tab=readme-ov-file#installation).
-- **Yazi**: Check the [installation](https://yazi-rs.github.io/docs/installation).
 
 ## 🔌 Additional Plugins
 
-- **Finder**: `telescope.nvim` extended with `live_grep_args`, `fzf`, `frequency`, `file_browser`
-- **Navigation**: `harpoon`, `neominimap`, `yazi`
+- **Finder**: `telescope.nvim` extended with `live_grep_args`, `fzf`, `frecency`, `file_browser`
+- **Navigation**: `harpoon`, `neominimap`
 - **Completion**: `blink.cmp`, `nvim-autopairs`
-- **Editing**: `nvim-treesitter-context`, `nvim-surround`, `nvim-rip-substitute`, `nvim-ts-autotag`
+- **Editing**: `nvim-treesitter-context`, `nvim-surround`, `nvim-rip-substitute`, `nvim-ts-autotag`, `flash.nvim`
 - **Debugging**: `nvim-dap`, `nvim-dap-ui`, `trouble.nvim`, `nvim-chainsaw`
-- **Git**: `lazygit`, `octo.nvim`, `neogit`, `diffview.nvim`, `git-conflict.nvim`, `vim-fugitive`, `vim-rhubarb`
+- **Git**: `lazygit`, `octo.nvim`, `diffview.nvim`, `git-conflict.nvim`, `vim-fugitive`, `vim-rhubarb`
 - **Rust**: `rustaceanvim`, `crates.nvim`
 - **Markdown**: `markdown-preview`, `render-markdown`
 - **Coding Assistant**: `Avante`

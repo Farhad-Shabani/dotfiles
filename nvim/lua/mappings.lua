@@ -6,14 +6,13 @@ local function opts(desc, expr)
   return { noremap = true, silent = true, desc = desc, expr = expr or false }
 end
 
--- Exit
-map({ "i", "v" }, "jk", "<ESC>")
-map("i", "<ESC>", "<ESC>", { noremap = true, silent = true })
+-- Exit (jk handled by better-escape.nvim)
 map("n", "<leader>jk", "<cmd>nohl<CR>", opts "Clear search highlight")
 map("n", "<leader>q", "<cmd>q<CR>", opts "Close buffer")
 map("n", "<leader>Q", "<cmd>q!<CR>", opts "Close buffer forcefully")
 map("n", "<A-w>", "<cmd>tabclose<CR>", opts "Close tab")
--- map("t", "<Esc>", [[<C-\><C-n>]], opts "Exit terminal view")
+map("n", "<leader>cx", '<cmd>:lua require("nvchad.tabufline").closeAllBufs()<CR>', opts "Close all buffers")
+map("n", "<leader>co", '<cmd>lua require("nvchad.tabufline").closeAllBufs(false)<CR>', opts "Close other buffers")
 
 -- Save
 vim.keymap.del("n", "<C-s>")
@@ -58,21 +57,15 @@ map("n", "<A-C-h>", "<cmd>vertical resize +2<cr>", opts "Increase Window Width")
 map("n", "<A-C-j>", "<cmd>resize -2<cr>", opts "Decrease Window Height")
 map("n", "<A-C-k>", "<cmd>resize +2<cr>", opts "Increase Window Height")
 
--- Window management
-map("n", "<leader>sv", "<C-w>v", opts "Split window vertically")
-map("n", "<leader>sh", "<C-w>s", opts "Split window horizontally")
-map("n", "<leader>se", "<C-w>=", opts "Make splits equal size")
-map("n", "<leader>sx", "<cmd>close<CR>", opts "Close current split")
-
 -- ZenMode
 map("n", "<leader>z", "<cmd>ZenMode<CR>", opts "Toggle ZenMode")
 
 -- Find
-map("n", "<Leader>ff", "<cmd>Telescope find_files<CR>", opts "Telescope find files")
-map("n", "<Leader>f", "<cmd>Telescope resume<CR>", opts "Telescope resume last search")
+map("n", "<leader>ff", "<cmd>Telescope find_files<CR>", opts "Telescope find files")
+map("n", "<leader>f", "<cmd>Telescope resume<CR>", opts "Telescope resume last search")
 map(
   "n",
-  "<space>fb",
+  "<Leader>fb",
   ":Telescope file_browser path=%:p:h select_buffer=true<CR>",
   opts "Telescope file browser (on current buffer)"
 )
@@ -106,28 +99,24 @@ map("n", "[x", function()
 end, opts "Go to context")
 
 -- Navigation
-local list = require("harpoon"):list()
-local harpoon_maps = {
-  hl = function()
-    require("configs.nav").toggle_telescope(list)
-  end,
-  ha = function()
-    list:add()
-  end,
-  hn = function()
-    list:next()
-  end,
-  hp = function()
-    list:prev()
-  end,
-}
-map("n", "<leader>hl", harpoon_maps.hl, opts "Open harpoon window")
-map("n", "<leader>ha", harpoon_maps.ha, opts "Add file")
-map("n", "<leader>hn", harpoon_maps.hn, opts "Next file")
-map("n", "<leader>hp", harpoon_maps.hp, opts "Prev file")
+local function harpoon_list()
+  return require("harpoon"):list()
+end
+map("n", "<leader>hl", function()
+  require("configs.nav").toggle_telescope(harpoon_list())
+end, opts "Open harpoon window")
+map("n", "<leader>ha", function()
+  harpoon_list():add()
+end, opts "Add file")
+map("n", "<leader>hn", function()
+  harpoon_list():next()
+end, opts "Next file")
+map("n", "<leader>hp", function()
+  harpoon_list():prev()
+end, opts "Prev file")
 for ii = 1, 4 do
   map("n", "<leader>" .. ii, function()
-    list:select(ii)
+    harpoon_list():select(ii)
   end, opts("Select file" .. ii))
 end
 map("n", "<leader>nm", "<cmd>Neominimap toggle<CR>", opts "Toggle global minimap")
@@ -135,15 +124,12 @@ map("n", "<leader>nr", "<cmd>Neominimap refresh<CR>", opts "Refresh global minim
 map("n", "<leader>no", "<cmd>Neominimap on<CR>", opts "Enable global minimap")
 map("n", "<leader>nc", "<cmd>Neominimap off<CR>", opts "Disable global minimap")
 map("n", "<leader>nb", "<cmd>Neominimap bufToggle<CR>", opts "Toggle minimap for current buffer")
-map({ "n", "t" }, "<leader>-", "<cmd>Yazi<cr>", opts "Yazi open at the current file")
-map({ "n", "t" }, "<leader>cw", "<cmd>Yazi cwd<cr>", opts "Yazi open the file manager in nvim's working directory")
-map({ "n", "t" }, "<leader>cr", "<cmd>Yazi toggle<cr>", opts "Yazi resume the last session")
 
 -- Debugging
 map("n", "<Leader>dl", "<cmd>lua require'dap'.step_into()<CR>", opts "Debugger step into")
 map("n", "<Leader>dj", "<cmd>lua require'dap'.step_over()<CR>", opts "Debugger step over")
 map("n", "<Leader>dk", "<cmd>lua require'dap'.step_out()<CR>", opts "Debugger step out")
-map("n", "<Leader>dc>", "<cmd>lua require'dap'.continue()<CR>", opts "Debugger continue")
+map("n", "<Leader>dc", "<cmd>lua require'dap'.continue()<CR>", opts "Debugger continue")
 map("n", "<Leader>db", "<cmd>lua require'dap'.toggle_breakpoint()<CR>", opts "Debugger toggle breakpoint")
 map(
   "n",
@@ -157,7 +143,7 @@ map("n", "<Leader>dr", "<cmd>lua require'dap'.run_last()<CR>", opts "Debugger ru
 -- Diagnostics
 map("n", "<Leader>e", vim.diagnostic.open_float, opts "Show diagnostics float")
 map("n", "<leader>fq", "<cmd>Telescope quickfix<CR>", opts "Telescope quickfix")
-map("n", "<leader>ls", "<cmd>Telescope spell_suggest<CR>", opts "Telescope spell suggest")
+map("n", "<leader>lz", "<cmd>Telescope spell_suggest<CR>", opts "Telescope spell suggest")
 map("n", "<leader>le", "<cmd>Telescope diagnostics<CR>", opts "Telescope diagnostics")
 map("n", "<leader>tn", "<cmd>Telescope noice<CR>", opts "Telescope noice")
 
@@ -181,18 +167,32 @@ map("n", "<leader>re", "<cmd>RustLsp expandMacro<CR>", opts "Rust expand macro")
 map("n", "<Leader>rd", "<cmd>lua vim.cmd('RustLsp testables')<CR>", opts "Rust debugger testables")
 
 -- Logging
-local chainsaw = require "chainsaw"
-map("n", "glm", chainsaw.messageLog, opts "Create message log statement")
-map("n", "gld", chainsaw.debugLog, opts "Create debug log statement")
-map("n", "glv", chainsaw.variablelog, opts "Log name & value under cursor")
-map("n", "gla", chainsaw.assertLog, opts "Assersion statement under cursor")
-map("n", "gle", chainsaw.emojiLog, opts "Insert Emoji log")
-map("n", "glr", chainsaw.removeLogs, opts "Remove all logs")
+map("n", "glm", function()
+  require("chainsaw").messageLog()
+end, opts "Create message log statement")
+map("n", "gld", function()
+  require("chainsaw").debugLog()
+end, opts "Create debug log statement")
+map("n", "glv", function()
+  require("chainsaw").variablelog()
+end, opts "Log name & value under cursor")
+map("n", "gla", function()
+  require("chainsaw").assertLog()
+end, opts "Assersion statement under cursor")
+map("n", "gle", function()
+  require("chainsaw").emojiLog()
+end, opts "Insert Emoji log")
+map("n", "glr", function()
+  require("chainsaw").removeLogs()
+end, opts "Remove all logs")
 
 -- TODOs
-local todo = require "todo-comments"
-map("n", "]t", todo.jump_next, opts "Next todo comment")
-map("n", "[t", todo.jump_prev, opts "Previous todo comment")
+map("n", "]t", function()
+  require("todo-comments").jump_next()
+end, opts "Next todo comment")
+map("n", "[t", function()
+  require("todo-comments").jump_prev()
+end, opts "Previous todo comment")
 
 -- Lazy
 map("n", "<Leader>Ls", "<cmd>Lazy sync<CR>", opts "Lazy sync")
@@ -203,7 +203,6 @@ map("n", "<leader>tf", "<cmd>Telescope git_files<CR>", opts "Telescope find git 
 map("n", "<leader>tB", "<cmd>Telescope git_branches<CR>", opts "Telescope git branches")
 map("n", "<leader>tc", "<cmd>Telescope git_commits<CR>", opts "Telescope git commits (repository)")
 map("n", "<leader>tC", "<cmd>Telescope git_bcommits<CR>", opts "Telescope git commits (current file)")
-map("n", "<Leader>gn", "<cmd>Neogit<CR>", opts "Neogit open")
 map("v", "<Leader>go", "<cmd>'<,'>GBrowse<CR>", opts "Open current selection in web")
 map("n", "<Leader>go", "<cmd>GBrowse<CR>", opts "Open current selection in web")
 map("v", "<Leader>gy", "<cmd>'<,'>GBrowse!<CR>", opts "Copy permalink of current selection")
@@ -213,34 +212,51 @@ map("n", "<Leader>op", "<cmd>Octo pr list<CR>", opts "Octo PR list")
 map("n", "<Leader>oi", "<cmd>Octo issue list<CR>", opts "Octo issue list")
 map("n", "<Leader>or", "<cmd>Octo review<CR>", opts "Octo review")
 
-local gitsigns = require "gitsigns"
 map("n", "]c", function()
   if vim.wo.diff then
     vim.cmd.normal { "]c", bang = true }
   else
-    gitsigns.nav_hunk "next"
+    require("gitsigns").nav_hunk "next"
   end
 end, opts "Gitsigns next git hunk")
 map("n", "[c", function()
   if vim.wo.diff then
     vim.cmd.normal { "[c", bang = true }
   else
-    gitsigns.nav_hunk "prev"
+    require("gitsigns").nav_hunk "prev"
   end
 end, opts "Gitsigns prev git hunk")
-map({ "n", "v" }, "<leader>gs", gitsigns.stage_hunk, opts "Gitsings stage hunk")
-map({ "n", "v" }, "<leader>gr", gitsigns.reset_hunk, opts "Gitsigns Reset hunk")
-map("n", "<leader>gS", gitsigns.stage_buffer, opts "Gitsigns stage buffer")
-map("n", "<leader>gR", gitsigns.reset_buffer, opts "Gitsigns reset buffer")
-map("n", "<leader>gp", gitsigns.preview_hunk, opts "Gitsigns preview hunk")
-map("n", "<leader>gi", gitsigns.preview_hunk_inline, opts "Gitsigns preview hunk inline")
+map({ "n", "v" }, "<leader>gs", function()
+  require("gitsigns").stage_hunk()
+end, opts "Gitsings stage hunk")
+map({ "n", "v" }, "<leader>gr", function()
+  require("gitsigns").reset_hunk()
+end, opts "Gitsigns Reset hunk")
+map("n", "<leader>gS", function()
+  require("gitsigns").stage_buffer()
+end, opts "Gitsigns stage buffer")
+map("n", "<leader>gR", function()
+  require("gitsigns").reset_buffer()
+end, opts "Gitsigns reset buffer")
+map("n", "<leader>gp", function()
+  require("gitsigns").preview_hunk()
+end, opts "Gitsigns preview hunk")
+map("n", "<leader>gi", function()
+  require("gitsigns").preview_hunk_inline()
+end, opts "Gitsigns preview hunk inline")
 map("n", "<leader>gb", function()
-  gitsigns.blame_line { full = true }
+  require("gitsigns").blame_line { full = true }
 end, opts "Gitsings blame line")
 
-map("n", "<leader>tb", gitsigns.toggle_current_line_blame, opts "Gitsigns toggle current line blame")
-map("n", "<leader>td", gitsigns.toggle_deleted, opts "Gitsigns toggle deleted lines")
-map("n", "<leader>tw", gitsigns.toggle_word_diff, opts "Gitsigns toggle word diff in hunks")
+map("n", "<leader>tb", function()
+  require("gitsigns").toggle_current_line_blame()
+end, opts "Gitsigns toggle current line blame")
+map("n", "<leader>td", function()
+  require("gitsigns").toggle_deleted()
+end, opts "Gitsigns toggle deleted lines")
+map("n", "<leader>tw", function()
+  require("gitsigns").toggle_word_diff()
+end, opts "Gitsigns toggle word diff in hunks")
 map("n", "<Leader>gd", "<cmd>DiffviewOpen<CR>", opts "Diff view all current changes")
 map(
   "n",
@@ -248,16 +264,46 @@ map(
   "<cmd>DiffviewOpen origin/main...HEAD --imply-local<CR>",
   opts "Diff view against base (for PRs)"
 )
-map("n", "<leader>gf", gitsigns.diffthis, opts "Gitsigns diff against index")
+map("n", "<leader>gf", function()
+  require("gitsigns").diffthis()
+end, opts "Gitsigns diff against index")
 map("n", "<leader>gc", function()
-  gitsigns.diffthis "~"
+  require("gitsigns").diffthis "~"
 end, opts "Gitsigns diff against last commit")
 map("n", "<Leader>gh", "<cmd>DiffviewFileHistory %<CR>", opts "Diff view current file history")
 map("n", "<Leader>gH", "<cmd>DiffviewFileHistory --range=origin/main...HEAD<CR>", opts "Diff view current file history")
 map("n", "<leader>gQ", function()
-  gitsigns.setqflist "all"
+  require("gitsigns").setqflist "all"
 end, opts "Gitsings add all hunks to quickfix")
-map("n", "<leader>gq", gitsigns.setqflist, opts "Gitsigns add buffer hunks to quickfix")
+map("n", "<leader>gq", function()
+  require("gitsigns").setqflist()
+end, opts "Gitsigns add buffer hunks to quickfix")
 map({ "o", "x" }, "gv", "<cmd>Gitsigns select_hunk<CR>", opts "Gitsigns select hunk")
-map("n", "ga", require("configs/nvim-tree").git_add, opts "Git add")
-map("n", "gc", ':G commit -m "', opts "Git commit")
+map("n", "ga", function()
+  require("configs.nvim-tree").git_add()
+end, opts "Git add")
+map("n", "<leader>gc", ':G commit -m "', opts "Git commit")
+
+-- Whisper
+map({ "n", "i" }, "<leader>v", function()
+  vim.fn.system "voice"
+  vim.cmd 'normal! "+p'
+end, { desc = "Voice input" })
+
+map("v", "<leader>l", function()
+  local path = vim.fn.expand "%:."
+  local start_line = vim.fn.line "v"
+  local end_line = vim.fn.line "."
+  if start_line > end_line then
+    start_line, end_line = end_line, start_line
+  end
+  local ref = start_line == end_line and path .. ":" .. start_line or path .. ":" .. start_line .. "-" .. end_line
+  vim.fn.setreg("+", ref)
+  print(ref)
+end, opts "Copy file:line reference")
+
+-- Command-line mode vim-like navigation
+map("c", "<C-h>", "<Left>", { desc = "Move left" })
+map("c", "<C-l>", "<Right>", { desc = "Move right" })
+map("c", "<C-j>", "<Down>", { desc = "Next history" })
+map("c", "<C-k>", "<Up>", { desc = "Previous history" })

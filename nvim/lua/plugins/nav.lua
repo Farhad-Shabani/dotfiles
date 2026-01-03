@@ -1,9 +1,26 @@
 return {
   {
+    "nvim-tree/nvim-tree.lua",
+    version = "*",
+    lazy = false,
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+    },
+    opts = {
+      view = {
+        width = 40,
+      },
+      filters = {
+        git_ignored = false,
+      },
+    },
+  },
+  {
     "ThePrimeagen/harpoon",
     branch = "harpoon2",
     dependencies = {
-      { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" },
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim",
     },
     event = "VeryLazy",
     config = function()
@@ -17,17 +34,6 @@ return {
     enabled = true,
     cmd = {
       "Neominimap",
-    },
-  },
-
-  {
-    "mikavilpas/yazi.nvim",
-    event = "VeryLazy",
-    opts = {
-      open_for_directories = false,
-      keymaps = {
-        show_help = "<f1>",
-      },
     },
   },
 }

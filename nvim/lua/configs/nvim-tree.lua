@@ -13,11 +13,11 @@ M.git_add = function()
 
   -- If the file is untracked, unstaged or partially staged, we stage it
   if gs == "??" or gs == "MM" or gs == "AM" or gs == " M" then
-    vim.cmd("silent !git add " .. node.absolute_path)
+    vim.cmd("silent !git add " .. vim.fn.shellescape(node.absolute_path))
 
   -- If the file is staged, we unstage
   elseif gs == "M " or gs == "A " then
-    vim.cmd("silent !git restore --staged " .. node.absolute_path)
+    vim.cmd("silent !git restore --staged " .. vim.fn.shellescape(node.absolute_path))
   end
 
   api.tree.reload()

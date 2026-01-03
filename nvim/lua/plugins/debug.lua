@@ -28,11 +28,8 @@ return {
 
   {
     "folke/trouble.nvim",
-    opts = {}, -- for default options, refer to the configuration section for custom setup.
     cmd = "Trouble",
-    config = function()
-      require("trouble").setup()
-    end,
+    opts = {},
     keys = {
       {
         "<leader>xx",
@@ -98,5 +95,10 @@ return {
         },
       }
     end,
+  },
+
+  {
+    "powerman/vim-plugin-AnsiEsc",
+    cmd = "AnsiEsc",
   },
 }

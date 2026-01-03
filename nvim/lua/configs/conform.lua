@@ -1,5 +1,4 @@
 local conform = require "conform"
-local autocmd = vim.api.nvim_create_autocmd
 
 conform.setup {
   formatters_by_ft = {
@@ -13,13 +12,13 @@ conform.setup {
     typescriptreact = { "prettierd", "prettier", stop_after_first = true },
     svelte = { "prettierd", "prettier", stop_after_first = true },
     svx = { "prettierd", "prettier", stop_after_first = true },
-    toml = { "taplo", stop_after_first = true },
+    go = { "gofmt", "goimports", stop_after_first = true },
+    dockerfile = { "dockerfmt" },
+    yaml = { "prettierd", "prettier", stop_after_first = true },
+    toml = { "taplo" },
+  },
+  format_on_save = {
+    lsp_fallback = true,
+    timeout_ms = 3000,
   },
 }
-
-autocmd("BufWritePre", {
-  pattern = "*",
-  callback = function(args)
-    conform.format { bufnr = args.buf }
-  end,
-})

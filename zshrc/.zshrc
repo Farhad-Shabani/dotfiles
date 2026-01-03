@@ -114,6 +114,9 @@ compinit
 # use vi key bindings
 bindkey -v
 
+# Map jk to Escape in vi insert mode
+bindkey -M viins 'jk' vi-cmd-mode
+
 # avoid the annoying backspace/delete issue
 # where backspace stops deleting characters
 bindkey -v '^?' backward-delete-char
@@ -124,6 +127,10 @@ export PATH="/opt/homebrew/bin:$PATH"
 export PATH="/opt/homebrew/sbin:$PATH"
 export PATH="/opt/homebrew/opt/openssl@3/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+
+# Custom scripts from dotfiles
+export PATH="$HOME/dotfiles/bin:$PATH"
 
 export GPG_TTY=$(tty)
 

@@ -1,6 +1,23 @@
 -- This file needs to have same structure as nvconfig.lua
 -- https://github.com/NvChad/ui/blob/v2.5/lua/nvconfig.lua
 
+-- Set St_FilePath highlight once on ColorScheme change
+vim.api.nvim_create_autocmd("ColorScheme", {
+  callback = function()
+    local bg = vim.fn.synIDattr(vim.fn.hlID "St_file", "bg")
+    if bg ~= "" then
+      vim.api.nvim_set_hl(0, "St_FilePath", { fg = "#6b6b6b", bg = bg })
+    end
+  end,
+})
+-- Set it immediately for current colorscheme
+vim.schedule(function()
+  local bg = vim.fn.synIDattr(vim.fn.hlID "St_file", "bg")
+  if bg ~= "" then
+    vim.api.nvim_set_hl(0, "St_FilePath", { fg = "#6b6b6b", bg = bg })
+  end
+end)
+
 local custom_file = function()
   -- Handle separator style
   local sep_style = require("nvconfig").ui.statusline.separator_style
@@ -25,10 +42,6 @@ local custom_file = function()
 
   -- Formatting adjustments
   name = " " .. name .. (sep_style == "default" and " " or "")
-
-  -- Preserve background color of St_file
-  local bg_color = vim.fn.synIDattr(vim.fn.hlID "St_file", "bg")
-  vim.cmd("hi St_FilePath guifg=#6b6b6b guibg=" .. bg_color)
 
   return "%#St_file# " .. icon .. "%#St_FilePath#" .. name .. "%#St_file_sep#" .. sep_r
 end

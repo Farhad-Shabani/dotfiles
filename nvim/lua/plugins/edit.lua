@@ -1,5 +1,30 @@
 return {
   {
+    "max397574/better-escape.nvim",
+    event = "InsertEnter",
+    opts = {
+      timeout = 150,
+      mappings = {
+        i = { j = { k = "<Esc>" } },
+        c = { j = { k = "<Esc>" } },
+        t = { j = { k = "<Esc>" } },
+        v = { j = { k = "<Esc>" } },
+        s = { j = { k = "<Esc>" } },
+      },
+    },
+  },
+
+  {
+    "folke/flash.nvim",
+    event = "VeryLazy",
+    opts = {},
+    keys = {
+      { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+      { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+    },
+  },
+
+  {
     "nvim-treesitter/nvim-treesitter-context",
     event = "BufReadPost",
     opts = {
@@ -12,6 +37,7 @@ return {
           "method",
         },
       },
+      exclude = { "markdown" },
     },
   },
 

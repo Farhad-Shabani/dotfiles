@@ -1,51 +1,47 @@
 local g = vim.g
 local o = vim.o
 
-g.markdown_fenced_languages = {
-  "ts=typescript",
-}
+-- Disable netrw (using nvim-tree)
+g.loaded_netrw = 1
+g.loaded_netrwPlugin = 1
+g.markdown_fenced_languages = { "ts=typescript" }
 
-o.cursorlineopt = "both"
-o.relativenumber = true
+-- UI
 o.number = true
+o.relativenumber = true
+o.cursorlineopt = "both"
+o.signcolumn = "yes"
 o.ruler = true
-o.autoread = true
-o.mouse = "a"
 o.termguicolors = true
-o.expandtab = true
+o.conceallevel = 1
+
+-- Editing
+o.mouse = "a"
 o.wrap = true
 o.breakindent = true
 o.autoindent = true
-o.signcolumn = "yes"
-o.conceallevel = 1
+o.autoread = true
+o.undofile = true
+
+-- Search
+o.ignorecase = true
+o.smartcase = true
+o.inccommand = "split"
+
+-- Indentation
+o.expandtab = true
+o.tabstop = 2
+o.shiftwidth = 2
+
+-- Splits
+o.splitright = true
+o.splitbelow = true
+o.scrolloff = 8
+o.sidescrolloff = 8
+
+-- Performance
+o.updatetime = 250
 o.timeout = true
-o.timeoutlen = 300
+o.timeoutlen = 500
 o.ttimeoutlen = 20
 o.synmaxcol = 300
-
-local autocmd = vim.api.nvim_create_autocmd
-
-autocmd("FileType", {
-  pattern = { "markdown", "text", "gitcommit" },
-  callback = function()
-    vim.opt_local.spell = true
-    vim.opt_local.spelllang = "en_us"
-    vim.opt_local.spelloptions = "camel"
-  end,
-})
-
-autocmd("FileType", {
-  pattern = { "terminal" },
-  callback = function()
-    vim.opt_local.spell = false
-  end,
-})
-
-autocmd("FileType", {
-  pattern = { "cairo" },
-  callback = function()
-    o.tabstop = 4
-    o.shiftwidth = 4
-    o.expandtab = true
-  end,
-})
