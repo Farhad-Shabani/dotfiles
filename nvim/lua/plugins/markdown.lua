@@ -14,17 +14,17 @@ return {
     ft = { "markdown" },
     dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
     config = function(_, opts)
-      -- Monochrome palette with subtle warmth
+      -- Soft monochrome palette - minimal contrast, easy on the eyes
       local c = {
-        h1 = "#faf9f7", h2 = "#d9d8d6", h3 = "#b9b8b6",
-        h4 = "#999896", h5 = "#898886", h6 = "#797876",
-        bg1 = "#363534", bg2 = "#333232", bg3 = "#313030",
-        bg4 = "#2f2e2e", bg5 = "#2e2d2d", bg6 = "#2d2c2c",
-        code_bg = "#232222", code_inline_bg = "#393838",
-        text = "#b0afad", quote = "#908f8d",
-        link = "#a09f9d", link_url = "#706f6d",
-        table_head = "#908f8d", table_row = "#807f7d", table_border = "#605f5d",
-        checked = "#c0bfbd", unchecked = "#504f4d",
+        h1 = "#c5c3c0", h2 = "#b5b3b0", h3 = "#a5a3a0",
+        h4 = "#959390", h5 = "#8a8885", h6 = "#807e7b",
+        bg1 = "#302f2e", bg2 = "#2e2d2c", bg3 = "#2c2b2a",
+        bg4 = "#2b2a29", bg5 = "#2a2928", bg6 = "#292827",
+        code_bg = "#272625", code_inline_bg = "#323130",
+        text = "#a09e9b", quote = "#858380",
+        link = "#9a9895", link_url = "#706e6b",
+        table_head = "#8a8885", table_row = "#7a7875", table_border = "#504e4b",
+        checked = "#a5a3a0", unchecked = "#454340",
       }
 
       local function set_highlights()
