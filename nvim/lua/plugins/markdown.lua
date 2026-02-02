@@ -16,26 +16,40 @@ return {
     config = function(_, opts)
       -- Soft monochrome palette - minimal contrast, easy on the eyes
       local c = {
-        h1 = "#c5c3c0", h2 = "#b5b3b0", h3 = "#a5a3a0",
-        h4 = "#959390", h5 = "#8a8885", h6 = "#807e7b",
-        bg1 = "#302f2e", bg2 = "#2e2d2c", bg3 = "#2c2b2a",
-        bg4 = "#2b2a29", bg5 = "#2a2928", bg6 = "#292827",
-        code_bg = "#272625", code_inline_bg = "#323130",
-        text = "#a09e9b", quote = "#858380",
-        link = "#9a9895", link_url = "#706e6b",
-        table_head = "#8a8885", table_row = "#7a7875", table_border = "#504e4b",
-        checked = "#a5a3a0", unchecked = "#454340",
+        h1 = "#c5c3c0",
+        h2 = "#b5b3b0",
+        h3 = "#a5a3a0",
+        h4 = "#959390",
+        h5 = "#8a8885",
+        h6 = "#807e7b",
+        bg1 = "#302f2e",
+        bg2 = "#2e2d2c",
+        bg3 = "#2c2b2a",
+        bg4 = "#2b2a29",
+        bg5 = "#2a2928",
+        bg6 = "#292827",
+        code_bg = "#272625",
+        code_inline_bg = "#323130",
+        text = "#a09e9b",
+        quote = "#858380",
+        link = "#9a9895",
+        link_url = "#706e6b",
+        table_head = "#8a8885",
+        table_row = "#7a7875",
+        table_border = "#504e4b",
+        checked = "#a5a3a0",
+        unchecked = "#454340",
       }
 
       local function set_highlights()
         local hl = vim.api.nvim_set_hl
         -- Headings (render-markdown + treesitter)
-        for i, fg in ipairs({ c.h1, c.h2, c.h3, c.h4, c.h5, c.h6 }) do
+        for i, fg in ipairs { c.h1, c.h2, c.h3, c.h4, c.h5, c.h6 } do
           local bold = i <= 4
           hl(0, "RenderMarkdownH" .. i, { fg = fg, bold = bold })
           hl(0, "@markup.heading." .. i .. ".markdown", { fg = fg, bold = bold })
         end
-        for i, bg in ipairs({ c.bg1, c.bg2, c.bg3, c.bg4, c.bg5, c.bg6 }) do
+        for i, bg in ipairs { c.bg1, c.bg2, c.bg3, c.bg4, c.bg5, c.bg6 } do
           hl(0, "RenderMarkdownH" .. i .. "Bg", { bg = bg })
         end
         -- Code

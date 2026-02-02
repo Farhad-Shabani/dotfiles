@@ -30,6 +30,8 @@ autocmd("FileType", {
   pattern = { "markdown", "text" },
   callback = function()
     vim.opt_local.textwidth = 80
+    vim.opt_local.linebreak = true
+    vim.opt_local.formatoptions:append "n"
     vim.opt_local.timeoutlen = 50
     vim.cmd.NoMatchParen()
     vim.defer_fn(function()
@@ -40,6 +42,7 @@ autocmd("FileType", {
     vim.fn.matchadd("DiagnosticOk", "#win")
     vim.fn.matchadd("DiagnosticError", "#block")
     vim.fn.matchadd("DiagnosticWarn", "#idea")
+    vim.fn.matchadd("DiagnosticWarn", "#work")
     vim.fn.matchadd("DiagnosticInfo", "#deep")
     vim.fn.matchadd("DiagnosticHint", "#meet")
   end,

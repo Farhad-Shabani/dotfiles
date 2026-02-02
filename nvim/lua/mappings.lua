@@ -119,11 +119,6 @@ for ii = 1, 4 do
     harpoon_list():select(ii)
   end, opts("Select file" .. ii))
 end
-map("n", "<leader>nm", "<cmd>Neominimap toggle<CR>", opts "Toggle global minimap")
-map("n", "<leader>nr", "<cmd>Neominimap refresh<CR>", opts "Refresh global minimap")
-map("n", "<leader>no", "<cmd>Neominimap on<CR>", opts "Enable global minimap")
-map("n", "<leader>nc", "<cmd>Neominimap off<CR>", opts "Disable global minimap")
-map("n", "<leader>nb", "<cmd>Neominimap bufToggle<CR>", opts "Toggle minimap for current buffer")
 
 -- Debugging
 map("n", "<Leader>dl", "<cmd>lua require'dap'.step_into()<CR>", opts "Debugger step into")

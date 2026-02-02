@@ -14,7 +14,7 @@ return {
       completion = {
         list = { selection = { preselect = true, auto_insert = true } },
 
-        accept = { auto_brackets = { enabled = true } },
+        accept = { auto_brackets = { enabled = false } },
 
         menu = {
           draw = {

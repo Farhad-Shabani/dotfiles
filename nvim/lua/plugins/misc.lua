@@ -105,6 +105,7 @@ return {
 
   {
     "HakonHarnes/img-clip.nvim",
+    lazy = true,
     opts = {},
     keys = {
       { "<leader>pi", "<cmd>PasteImage<cr>", desc = "Paste image from system clipboard" },

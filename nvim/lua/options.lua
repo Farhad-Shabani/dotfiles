@@ -39,6 +39,26 @@ o.splitbelow = true
 o.scrolloff = 8
 o.sidescrolloff = 8
 
+-- OSC 52 clipboard (works over SSH)
+-- Check multiple env vars since SSH_TTY may not persist in tmux
+local function is_ssh()
+  return os.getenv("SSH_TTY") or os.getenv("SSH_CLIENT") or os.getenv("SSH_CONNECTION")
+end
+
+if is_ssh() then
+  vim.g.clipboard = {
+    name = "OSC 52",
+    copy = {
+      ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+      ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+    },
+    paste = {
+      ["+"] = require("vim.ui.clipboard.osc52").paste("+"),
+      ["*"] = require("vim.ui.clipboard.osc52").paste("*"),
+    },
+  }
+end
+
 -- Performance
 o.updatetime = 250
 o.timeout = true
